@@ -104,12 +104,20 @@ def index_of_most_similar(db, query):
 class SemanticSentenceSimilarity:
     def __init__(self, model_name_or_path: str, device: str):
         self.model = SentenceTransformer(model_name_or_path, device=device)
+        pca_path = model_name_or_path + "/pca.pkl"
+        if Path(pca_path).exists():
+            self.pca = load_pca(path=pca_path)
+        else:
+            self.pca = None
         self.db_sentences = []
         self.db_vectors: np.ndarray = None
 
     def compare(self, sentence_one: str, sentence_two: str) -> float:
         sentence_one_vec = self.model.encode([sentence_one])[0]
         sentence_two_vec = self.model.encode([sentence_two])[0]
+        if self.pca is not None:
+            sentence_one_vec = self.pca.transform([sentence_one_vec])[0]
+            sentence_two_vec = self.pca.transform([sentence_two_vec])[0]
         return cosine_similarity(sentence_one_vec, sentence_two_vec)
 
     def extend_db(self, new_sentences: List[str]) -> None:
