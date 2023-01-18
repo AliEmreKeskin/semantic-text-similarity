@@ -2,6 +2,16 @@
 
 `pip install -r requirements.txt`
 
+# Download Pre-trained Models
+
+best_model_pooling_512
+
+https://drive.google.com/drive/folders/1fFjncBNo3-2dmJjz3CwySWB3XH288BQ1?usp=sharing
+
+best_model_pooling_768_pca_512
+
+https://drive.google.com/drive/folders/1_eJ9qqbl_KpA8vfAEtjN3xVSPu47beAP?usp=sharing
+
 # How to Run Demo
 
 `python demo.py`
